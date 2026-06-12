@@ -1,5 +1,17 @@
 # ka-marketplace
 
+> **📦 New home:** this marketplace and its plugins now live under the
+> [**Kelley-Austin**](https://github.com/Kelley-Austin) org. The old
+> `bkkelley/ka-marketplace`, `bkkelley/ka-sfskills`, and
+> `bkkelley/claude-code-dashboard` repos are **archived (read-only)** — update
+> any bookmarks, clones, or scripts to the `Kelley-Austin` URLs below.
+>
+> ```bash
+> # if you previously added the old marketplace, re-point it:
+> claude plugin marketplace remove kelleyaustin
+> claude plugin marketplace add Kelley-Austin/ka-marketplace
+> ```
+
 A Claude Code marketplace bundling
 [`ka-sfskills`](https://github.com/Kelley-Austin/ka-sfskills) (Salesforce
 agents, skills, commands, MCP server) and
