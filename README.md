@@ -1,10 +1,10 @@
 # ka-marketplace
 
-> **📦 New home:** this marketplace and its plugins now live under the
+> **📦 New home:** this marketplace and its plugin now live under the
 > [**Kelley-Austin**](https://github.com/Kelley-Austin) org. The old
-> `bkkelley/ka-marketplace`, `bkkelley/ka-sfskills`, and
-> `bkkelley/claude-code-dashboard` repos are **archived (read-only)** — update
-> any bookmarks, clones, or scripts to the `Kelley-Austin` URLs below.
+> `bkkelley/ka-marketplace` and `bkkelley/ka-sfskills` repos are
+> **archived (read-only)** — update any bookmarks, clones, or scripts to
+> the `Kelley-Austin` URLs below.
 >
 > ```bash
 > # if you previously added the old marketplace, re-point it:
@@ -12,12 +12,10 @@
 > claude plugin marketplace add Kelley-Austin/ka-marketplace
 > ```
 
-A Claude Code marketplace bundling
+A Claude Code marketplace for
 [`ka-sfskills`](https://github.com/Kelley-Austin/ka-sfskills) (Salesforce
-agents, skills, commands, MCP server) and
-[`claude-code-dashboard`](https://github.com/Kelley-Austin/claude-code-dashboard)
-(local web UI), plus a one-shot `install.sh` for non-developer
-teammates on macOS.
+agents, skills, commands, MCP server), plus a one-shot `install.sh` for
+non-developer teammates on macOS.
 
 ---
 
@@ -53,8 +51,7 @@ short version:
 ```
 sf org login web --alias myorg     # one-time, authenticate to Salesforce
 claude                              # open Claude Code
-/start-dashboard                    # opens the web UI in your browser
-/build-apex                         # or try any other slash command
+/build-apex                         # try any slash command
 ```
 
 ### If something goes wrong
@@ -89,9 +86,8 @@ On a brand-new Mac it walks through:
 | 4 | Node.js — only if missing | No |
 | 5 | Salesforce CLI (`@salesforce/cli` via npm) | No |
 | 6 | Claude Code (`claude` via the official installer) | No |
-| 7 | Python deps: `aiohttp`, `aiohttp_jinja2`, `jinja2` (`pip install --user`) | No |
-| 8 | Adds the `kelleyaustin` marketplace to Claude Code | No |
-| 9 | Installs `ka-sfskills` (the dashboard plugin comes as a dependency) | No |
+| 7 | Adds the `kelleyaustin` marketplace to Claude Code | No |
+| 8 | Installs `ka-sfskills` | No |
 
 Nothing requires `sudo`. Nothing modifies anything outside Homebrew's
 prefix and your home directory (`~/.claude/`, `~/.local/`).
@@ -104,33 +100,22 @@ After the install:
 
 ```
 ~/.claude/plugins/cache/
-├── kelleyaustin/
-│   ├── ka-sfskills/0.2.0/
-│   │   ├── agents/                 # 60+ Salesforce run-time agents
-│   │   ├── skills/                 # 982 source-cited skill docs
-│   │   ├── commands/               # /build-apex, /audit-router, etc.
-│   │   └── mcp/sfskills-mcp/       # live-org MCP server
-│   └── claude-code-dashboard/1.0.0/
-│       ├── scripts/dashboard/      # the web UI
-│       └── hooks/                  # subagent + slash lifecycle hooks
-└── …
+└── kelleyaustin/
+    └── ka-sfskills/0.4.0/
+        ├── agents/                 # 60+ Salesforce run-time agents
+        ├── skills/                 # 982 source-cited skill docs
+        ├── commands/               # /build-apex, /audit-router, etc.
+        └── mcp/sfskills-mcp/       # live-org MCP server
 ```
 
 In Claude Code, type `/` and you'll see autocomplete for every
-ka-sfskills slash command. `/start-dashboard` opens the local web UI
-at `http://localhost:9000`.
-
-State is at `~/.claude/dashboard/`:
-- `events.jsonl` — live event stream
-- `chat-sessions.json` — chat session history
-- `projects.json` — chat panel's recent projects
-- `dashboard.log` — server stderr
+ka-sfskills slash command.
 
 ---
 
 ## For the maintainer (me) — updating the marketplace
 
-When `ka-sfskills` or `claude-code-dashboard` cuts a new version:
+When `ka-sfskills` cuts a new version:
 
 1. Bump the corresponding `version` field in
    `.claude-plugin/marketplace.json`.
@@ -171,9 +156,7 @@ To ship a third plugin through the same marketplace, append to the
 }
 ```
 
-The plugin's repo just needs a `.claude-plugin/plugin.json` (and a
-`dashboard.json` if it wants to surface in the dashboard's
-agents/skills pages).
+The plugin's repo just needs a `.claude-plugin/plugin.json`.
 
 ---
 
@@ -181,8 +164,6 @@ agents/skills pages).
 
 - [`ka-sfskills`](https://github.com/Kelley-Austin/ka-sfskills) — Salesforce
   agents, skills, commands, MCP server.
-- [`claude-code-dashboard`](https://github.com/Kelley-Austin/claude-code-dashboard) —
-  the local web UI.
 
 ## License
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Kelley Austin · one-shot installer for ka-sfskills + claude-code-dashboard.
+# Kelley Austin · one-shot installer for ka-sfskills.
 #
 # Designed to be safe to run on a fresh macOS install with no developer
 # tooling. Detects what's missing, installs only that, and is idempotent
@@ -17,11 +17,9 @@
 #   3. Installs Python 3.13 via brew if missing.
 #   4. Installs Node.js + Salesforce CLI via brew if missing.
 #   5. Installs Claude Code (claude CLI) via the official installer.
-#   6. Installs the Python deps the dashboard needs (aiohttp et al)
-#      into the user's Python (no sudo).
-#   7. Registers the kelleyaustin marketplace with Claude Code.
-#   8. Installs ka-sfskills (claude-code-dashboard comes as a dep).
-#   9. Prints next-step instructions.
+#   6. Registers the kelleyaustin marketplace with Claude Code.
+#   7. Installs ka-sfskills.
+#   8. Prints next-step instructions.
 
 set -euo pipefail
 
@@ -119,12 +117,6 @@ if ! command -v claude >/dev/null 2>&1; then
 fi
 ok "claude $(claude --version 2>&1 | head -1)"
 
-# ----- Python deps for the dashboard --------------------------------
-step "Dashboard Python deps"
-
-"$PYTHON_BIN" -m pip install --quiet --upgrade --user aiohttp aiohttp_jinja2 jinja2
-ok "aiohttp, aiohttp_jinja2, jinja2 installed for $($PYTHON_BIN -c 'import sys; print(sys.executable)')"
-
 # ----- Claude Code marketplace + plugins ----------------------------
 step "Plugins"
 
@@ -140,12 +132,12 @@ else
   ok "added marketplace https://github.com/Kelley-Austin/ka-marketplace"
 fi
 
-# Install the plugin. Dashboard is pulled as a dependency.
+# Install the plugin.
 if claude plugin list 2>/dev/null | grep -qi "ka-sfskills"; then
   skip "ka-sfskills already installed"
 else
   claude plugin install ka-sfskills@kelleyaustin
-  ok "ka-sfskills installed (claude-code-dashboard came as a dep)"
+  ok "ka-sfskills installed"
 fi
 
 # ----- done ---------------------------------------------------------
@@ -164,14 +156,11 @@ cat <<EOF
        ${DIM}claude${RESET}
 
   3. In Claude Code, type a slash command — try one of:
-       ${DIM}/start-dashboard${RESET}  (opens the browser UI at localhost:9000)
        ${DIM}/build-apex${RESET}       (generate Apex)
        ${DIM}/audit-router${RESET}     (audit Lightning record pages, validation rules, etc.)
 
   ${BOLD}Where things live${RESET}
     plugins        ~/.claude/plugins/cache/
-    state          ~/.claude/dashboard/
-    logs           ~/.claude/dashboard/dashboard.log
 
   Questions / issues — ping #salesforce-ai-tools on Slack.
 
